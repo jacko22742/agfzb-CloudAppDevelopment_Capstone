@@ -24,5 +24,10 @@ urlpatterns = [
     # path for dealer reviews view
 
     # path for add a review view
+    # path for about view
+    #week 1 T4
+    path(route='about', view=views.about, name='about'),
+    # path for contact us view
+    path(route='contact', view=views.contact, name='contact')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
