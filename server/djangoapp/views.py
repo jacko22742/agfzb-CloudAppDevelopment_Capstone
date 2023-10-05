@@ -10,7 +10,7 @@ from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, get_deale
 from datetime import datetime
 import logging
 import json
-from .models import CarModel, CarDealer, CarMake
+from .models import CarDealer, DealerReview, CarModel, CarMake
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -103,7 +103,7 @@ def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
         url = 'https://us-south.functions.appdomain.cloud/api/v1/web/c47d8d02-01c2-43d0-9638-9b6127312e31/dealership-package/get-dealership'
-        context = {"reviews":  get_dealer_reviews_by_id_from_cf(url, dealer_id)}
+        context = {"reviews":  get_dealer_reviews_from_cf(url, dealer_id)}
         
         return render(request, 'djangoapp/dealer_details.html', context)
 
