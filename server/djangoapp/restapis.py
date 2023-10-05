@@ -48,41 +48,19 @@ def get_dealers_from_cf(url, **kwargs):
     # Call get_request with a URL parameter
     json_result = get_request(url)
     if json_result:
-        # Check if the JSON response contains a "dealers" key or adjust based on the actual structure
-        if "dealers" in json_result:
-            dealers = json_result["dealers"]
-        else:
-            dealers = json_result  # Assuming the JSON response itself is the list of dealers
-        
+        # Get the row list in JSON as dealers
+        dealers = json_result
         # For each dealer object
         for dealer in dealers:
-            # Get its content
-            # Modify the keys as needed based on the actual structure
-            address = dealer.get("address", "")
-            city = dealer.get("city", "")
-            full_name = dealer.get("full_name", "")
-            id = dealer.get("id", "")
-            lat = dealer.get("lat", 0.0)
-            long = dealer.get("long", 0.0)
-            short_name = dealer.get("short_name", "")
-            st = dealer.get("st", "")
-            zip = dealer.get("zip", "")
-            
-            # Create a CarDealer object with values
-            dealer_obj = CarDealer(
-                address=address,
-                city=city,
-                full_name=full_name,
-                id=id,
-                lat=lat,
-                long=long,
-                short_name=short_name,
-                st=st,
-                zip=zip
-            )
+            # Get its content in `doc` object
+            dealer_doc = dealer["doc"]
+            # Create a CarDealer object with values in `doc` object
+            dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
+                                   id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
+                                   short_name=dealer_doc["short_name"],
+                                   st=dealer_doc["st"], zip=dealer_doc["zip"])
             results.append(dealer_obj)
     return results
-
 
 def get_dealer_reviews_from_cf(url, dealer_id):
     results = []
